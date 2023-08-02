@@ -1,0 +1,62 @@
+<?php
+
+namespace App\Tests\Unit\Calculator\Operation;
+
+use App\Calculator\Arithmetic\NumberOperand;
+use App\Calculator\Arithmetic\Operation\Sum;
+use App\Number\Number;
+use App\Number\NumberInterface;
+use PHPUnit\Framework\TestCase;
+
+class SumTest extends TestCase
+{
+    /**
+     * @dataProvider sumProvider
+     * @param string $leftStr
+     * @param string $rightStr
+     * @param string $resultString
+     * @return void
+     */
+    public function testExec(string $leftStr, string $rightStr, string $resultString)
+    {
+
+        $op1 = new NumberOperand(Number::createFromString($leftStr));
+        $op2 = new NumberOperand(Number::createFromString($rightStr));
+
+        $sum = new Sum();
+
+        /** @var NumberInterface $result */
+        $result = $sum($op1, $op2)->exec()->getValue();
+
+        $expected = Number::createFromString($resultString);
+        $this->assertTrue(
+            $result->equals($expected),
+            sprintf(
+                'Expected %s, %s given',
+                $expected->getValue(),
+                $result->getValue()
+            )
+        );
+
+    }
+
+    public function sumProvider()
+    {
+        return [
+            '2+3=5' => [
+                '2', '3', '5'
+            ],
+            '2+(-3)=-1' => [
+                '2', '-3', '-1'
+            ],
+            '2.1+3=5.1' => [
+                '2.1', '3', '5.1'
+            ],
+            '2.1+(-3)=-1.1' => [
+                '2.1', '-3', '-0.9'
+            ]
+        ];
+    }
+
+
+}
