@@ -4,6 +4,7 @@ namespace App\Calculator\Arithmetic;
 
 use App\Calculator\CalculatorInterface;
 use App\Calculator\Exception\InvalidOperandTypeException;
+use App\Calculator\Exception\OperationNotSupported;
 use App\Calculator\Operand\OperandInterface;
 use App\Calculator\Operation\OperationInterface;
 use App\Calculator\Operator\OperatorInterface;
@@ -38,10 +39,18 @@ class ArithmeticCalculator implements CalculatorInterface
 
     }
 
+    /**
+     * @throws OperationNotSupported
+     */
     protected function resolveOperation(OperatorInterface $operator): OperationInterface
     {
-        $operation = $operator->resolveOperationClassName();
-        return new $operation;
+        foreach ($this->operationsSupported as $operation){
+            if($operation->getOperator()->equals($operator)){
+                return new $operation;
+            }
+        }
+
+        throw new OperationNotSupported('Operation %s is not supported');
 
     }
 
