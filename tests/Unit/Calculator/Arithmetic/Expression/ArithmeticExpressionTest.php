@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Unit\Calculator\Expression;
+namespace App\Tests\Unit\Calculator\Arithmetic\Expression;
 
 use App\Calculator\Arithmetic\NumberOperand;
 use App\Calculator\Arithmetic\Operation\Sum;
