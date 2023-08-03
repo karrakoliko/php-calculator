@@ -20,11 +20,20 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    calculator.operations.divide:
+        class: 'App\Calculator\Arithmetic\Operation\Divide'
+    calculator.operations.multiply:
+        class: 'App\Calculator\Arithmetic\Operation\Multiply'
+    calculator.operations.subtract:
+        class: 'App\Calculator\Arithmetic\Operation\Subtract'
+    calculator.operations.sum:
+        class: 'App\Calculator\Arithmetic\Operation\Sum'
+            
     App\Calculator\CalculatorInterface:
         class: 'App\Calculator\Arithmetic\ArithmeticCalculator'
-        arguments:
+        bind:
             $operationsSupported:
-                - App\Calculator\Arithmetic\Operation\Divide
-                - App\Calculator\Arithmetic\Operation\Multiply
-                - App\Calculator\Arithmetic\Operation\Subtract
-                - App\Calculator\Arithmetic\Operation\Sum
+                - '@calculator.operations.divide'
+                - '@calculator.operations.multiply'
+                - '@calculator.operations.subtract'
+                - '@calculator.operations.sum'
