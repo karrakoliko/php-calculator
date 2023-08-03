@@ -52,9 +52,9 @@ class CalculatorController extends AbstractController
 
         try {
 
-            $left = new NumberOperand(Number::createFromString($leftStr));
+            $left = NumberOperand::createFromString($leftStr);
             $operator = ArithmeticOperatorFactory::createByName($operatorStr);
-            $right = new NumberOperand(Number::createFromString($rightStr));
+            $right = NumberOperand::createFromString($rightStr);
 
             $result = $this->calculator->calculate($left, $operator, $right);
 

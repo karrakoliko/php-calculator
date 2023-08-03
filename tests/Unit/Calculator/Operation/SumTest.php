@@ -20,8 +20,8 @@ class SumTest extends TestCase
     public function testExec(string $leftStr, string $rightStr, string $resultString)
     {
 
-        $op1 = new NumberOperand(Number::createFromString($leftStr));
-        $op2 = new NumberOperand(Number::createFromString($rightStr));
+        $op1 = NumberOperand::createFromString($leftStr);
+        $op2 = NumberOperand::createFromString($rightStr);
 
         $sum = new Sum();
 

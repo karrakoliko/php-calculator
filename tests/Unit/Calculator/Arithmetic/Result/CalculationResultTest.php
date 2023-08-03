@@ -12,8 +12,8 @@ class CalculationResultTest extends TestCase
 
     public function testToExpression()
     {
-        $op1 = new NumberOperand(Number::createFromString(2));
-        $op2 = new NumberOperand(Number::createFromString(1));
+        $op1 = NumberOperand::createFromString(2);
+        $op2 = NumberOperand::createFromString(1);
 
         $sum = new Sum();
 

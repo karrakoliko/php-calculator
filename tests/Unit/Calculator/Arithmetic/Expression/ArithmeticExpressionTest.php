@@ -17,7 +17,7 @@ class ArithmeticExpressionTest extends TestCase
 
         $sum = new Sum();
 
-        $operation = $sum(new NumberOperand(Number::createFromString(5)));
+        $operation = $sum(NumberOperand::createFromString(5));
 
         $operation->toExpression();
 
@@ -28,8 +28,8 @@ class ArithmeticExpressionTest extends TestCase
         $sum = new Sum();
 
         $operation = $sum(
-            new NumberOperand(Number::createFromString(5)),
-            new NumberOperand(Number::createFromString(6))
+            NumberOperand::createFromString(5),
+            NumberOperand::createFromString(6)
         );
 
         $this->assertEquals('5 + 6', $operation->toExpression());

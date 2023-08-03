@@ -3,6 +3,7 @@
 namespace App\Calculator\Arithmetic;
 
 use App\Calculator\Operand\OperandInterface;
+use App\Number\Number;
 use App\Number\NumberInterface;
 
 class NumberOperand implements OperandInterface
@@ -22,6 +23,6 @@ class NumberOperand implements OperandInterface
 
     public static function createFromString(string $value): OperandInterface
     {
-        // TODO: Implement createFromString() method.
+        return new NumberOperand(Number::createFromString($value));
     }
 }

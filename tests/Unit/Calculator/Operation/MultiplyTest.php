@@ -13,8 +13,8 @@ class MultiplyTest extends TestCase
     public function testMultiplyToZeroIsZeroShortCutUsed()
     {
         $operands = [
-            new NumberOperand(Number::createFromString('100')),
-            new NumberOperand(Number::createFromString('0')),
+            NumberOperand::createFromString('100'),
+            NumberOperand::createFromString('0')
         ];
 
         $division = new Multiply();

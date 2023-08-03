@@ -39,8 +39,8 @@ class CalculatorTest extends TestCase
     {
         $calc = NumberCalculatorFactory::creatArithmetic();
 
-        $left = new NumberOperand(Number::createFromString($leftString));
-        $right = new NumberOperand(Number::createFromString($rightString));
+        $left = NumberOperand::createFromString($leftString);
+        $right = NumberOperand::createFromString($rightString);
 
         $operator = ArithmeticOperatorFactory::createBySign($operatorSign);
 
