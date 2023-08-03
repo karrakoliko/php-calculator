@@ -20,5 +20,11 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    App\Calculator\CalculatorInterface:
+        class: 'App\Calculator\Arithmetic\ArithmeticCalculator'
+        arguments:
+            $operationsSupported:
+                - App\Calculator\Arithmetic\Operation\Divide
+                - App\Calculator\Arithmetic\Operation\Multiply
+                - App\Calculator\Arithmetic\Operation\Subtract
+                - App\Calculator\Arithmetic\Operation\Sum
