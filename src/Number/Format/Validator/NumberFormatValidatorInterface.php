@@ -15,4 +15,6 @@ interface NumberFormatValidatorInterface
      */
     public function validate($number, NumberFormatInterface $format): bool;
 
+    public function supportsFormat(NumberFormatInterface $format): bool;
+
 }

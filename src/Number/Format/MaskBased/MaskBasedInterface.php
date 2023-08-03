@@ -2,7 +2,7 @@
 
 namespace App\Number\Format\MaskBased;
 
-interface NumberFormatMaskBasedInterface
+interface MaskBasedInterface
 {
 
     public function getMaskRegexp(): string;

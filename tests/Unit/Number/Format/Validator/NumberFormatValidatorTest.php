@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Tests\Unit\Number\Format;
+namespace App\Tests\Unit\Number\Format\Validator;
 
 use App\Lib\NotificationBag\NotificationBag;
-use App\Number\Format\MaskBased\Validator\NumberFormatValidator;
-use App\Tests\Unit\Number\Format\helpers\NumberFormatFactory;
+use App\Number\Format\MaskBased\Validator\MaskBasedNumberFormatValidator;
+use App\Number\Format\NumberFormatFactory;
 use PHPUnit\Framework\TestCase;
 
 class NumberFormatValidatorTest extends TestCase
@@ -19,13 +19,13 @@ class NumberFormatValidatorTest extends TestCase
     public function testValidate(string $number, string $formatName, bool $resultBoolExpected)
     {
 
-        $validator = new NumberFormatValidator();
+        $validator = new MaskBasedNumberFormatValidator();
 
         $errors = new NotificationBag();
 
         $format = NumberFormatFactory::createByName($formatName);
 
-        $resultBool = $validator->validate($number, $format, $errors);
+        $resultBool = $validator->validate($number, $format);
 
         $this->assertEquals(
             $resultBoolExpected,
@@ -39,6 +39,7 @@ class NumberFormatValidatorTest extends TestCase
     {
         return [
             '0 INT' => ['0', NumberFormatFactory::FORMAT_INT, true],
+            '0 DECIMAL' => ['0', NumberFormatFactory::FORMAT_DECIMAL, false],
             '-5 INT' => ['-5', NumberFormatFactory::FORMAT_INT, true],
             '-0 INT' => ['-0', NumberFormatFactory::FORMAT_INT, true],
             '+0 INT' => ['+0', NumberFormatFactory::FORMAT_INT, false],

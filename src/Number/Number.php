@@ -3,50 +3,67 @@
 namespace App\Number;
 
 use App\Number\Exception\InvalidNumberException;
-use App\Number\Format\MaskBased\AppNumberFormat;
-use App\Number\Format\MaskBased\Validator\NumberFormatValidator;
+use App\Number\Format\Guesser\RegisteredNumberFormatGuesser;
+use App\Number\Format\MaskBased\MaskBasedInterface;
+use App\Number\Format\MaskBased\Validator\MaskBasedNumberFormatValidator;
+use App\Number\Format\NumberFormatFactory;
+use App\Number\Format\NumberFormatInterface;
 
 class Number implements NumberInterface
 {
 
     private string $value;
 
-    protected function __construct(string $value)
+    protected function __construct(string $value, NumberFormatInterface $format)
     {
-        $validator = new NumberFormatValidator();
-
-        $isValid = false;
-
-        foreach ($this->getFormat()->getMasks() as $mask) {
-
-            $isValid = $validator->validate($value, $mask);
-
-            if ($isValid) {
-                break;
-            }
-
-        }
-
-        if (!$isValid) {
+        if (!self::isValidNumberString($value, $format)) {
             throw new InvalidNumberException('Invalid number');
         }
 
         $this->value = $value;
     }
 
-    protected function getFormat(): AppNumberFormat
+    public static function isValidNumberString(string $value, NumberFormatInterface $format): bool
     {
-        return new AppNumberFormat();
+        $validator = new MaskBasedNumberFormatValidator();
+
+        /** @var MaskBasedInterface|NumberFormatInterface $format */
+        return $validator->validate($value, $format);
     }
 
     public static function zero(): Number
     {
-        return self::createFromString('0');
+        return new Number(0, NumberFormatFactory::int());
     }
 
-    public static function createFromString(string $value): Number
+    public static function createFromString(string $value, ?NumberFormatInterface $format = null): Number
     {
-        return new Number($value);
+        if ($format === null) {
+
+            $numberFormatGuesser = self::getNumberFormatGuesser();
+
+            $format = $numberFormatGuesser->guess($value);
+
+            if ($format === null) {
+                throw new InvalidNumberException('Invalid number: given number does not match any of supported formats');
+            }
+        }
+
+        return new Number($value, $format);
+    }
+
+    /**
+     * @return RegisteredNumberFormatGuesser
+     */
+    protected static function getNumberFormatGuesser(): RegisteredNumberFormatGuesser
+    {
+        return new RegisteredNumberFormatGuesser(
+            [
+                NumberFormatFactory::int(),
+                NumberFormatFactory::decimal(),
+            ],
+            new MaskBasedNumberFormatValidator()
+        );
     }
 
     public function getScale(): int
@@ -69,10 +86,6 @@ class Number implements NumberInterface
 
     public function equals(NumberInterface $number): bool
     {
-        if (!$number instanceof Number) {
-            throw new \LogicException('Comparing to non decimals not implemented yet');
-        }
-
         return $number->getValue() === $this->getValue();
     }
 
