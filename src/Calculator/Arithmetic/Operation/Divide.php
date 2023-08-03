@@ -5,25 +5,18 @@ namespace App\Calculator\Arithmetic\Operation;
 use App\Calculator\Arithmetic\NumberOperand;
 use App\Calculator\Arithmetic\Operation\Exception\DivisionByZeroException;
 use App\Calculator\Arithmetic\Operation\Exception\NoOperandsGivenException;
+use App\Calculator\Arithmetic\Operator\Division;
 use App\Calculator\Arithmetic\Result\NumberResult;
 use App\Calculator\Operand\OperandInterface;
+use App\Calculator\Operator\OperatorInterface;
 use App\Calculator\Result\ResultInterface;
 use App\Number\Number;
 
 class Divide extends MathOperationAbstract
 {
     const SHORTCUT_DIVIDE_ZERO_TO_ANY_IS_ZERO = 'divide_zero_to_any_is_zero';
-    /**
-     * @var NumberOperand[]
-     */
-    private array $operands = [];
 
     private array $shortcutsUsed = [];
-
-    public function __construct()
-    {
-
-    }
 
     public function exec(): ResultInterface
     {
@@ -99,5 +92,10 @@ class Divide extends MathOperationAbstract
     public function getName(): string
     {
         return 'divide';
+    }
+
+    public function getOperator(): OperatorInterface
+    {
+        return new Division();
     }
 }

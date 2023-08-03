@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Calculator\Arithmetic\Expression\ArithmeticExpression;
+use App\Calculator\Arithmetic\Expression\EqualityExpression;
 use App\Calculator\Arithmetic\NumberOperand;
 use App\Calculator\Arithmetic\Operator\ArithmeticOperatorFactory;
 use App\Calculator\CalculatorInterface;
@@ -74,8 +76,6 @@ class CalculatorController extends AbstractController
             $right = new NumberOperand(Number::createFromString($rightStr));
 
             $result = $this->calculator->calculate($left, $operator, $right);
-
-            dd($result);
 
         } catch (\TypeError|InvalidNumberException $e) {
             return $this->showError('Вы ввели некорректное число');

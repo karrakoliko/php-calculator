@@ -3,18 +3,16 @@
 namespace App\Calculator\Arithmetic\Operation;
 
 use App\Calculator\Arithmetic\NumberOperand;
+use App\Calculator\Arithmetic\Operator\Minus;
 use App\Calculator\Arithmetic\Result\NumberResult;
 use App\Calculator\Operand\OperandInterface;
 use App\Calculator\Operation\OperationInterface;
+use App\Calculator\Operator\OperatorInterface;
 use App\Calculator\Result\ResultInterface;
 use App\Number\Number;
 
-class Subtract implements OperationInterface
+class Subtract extends MathOperationAbstract
 {
-    /**
-     * @var NumberOperand[]
-     */
-    private array $operands;
 
     public function __invoke(OperandInterface ...$operands)
     {
@@ -49,5 +47,10 @@ class Subtract implements OperationInterface
     public function getName(): string
     {
         return 'substract';
+    }
+
+    public function getOperator(): OperatorInterface
+    {
+        return new Minus();
     }
 }

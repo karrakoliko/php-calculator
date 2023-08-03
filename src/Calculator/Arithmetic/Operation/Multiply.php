@@ -6,15 +6,12 @@ use App\Calculator\Arithmetic\NumberOperand;
 use App\Calculator\Arithmetic\Result\NumberResult;
 use App\Calculator\Operand\OperandInterface;
 use App\Calculator\Operation\OperationInterface;
+use App\Calculator\Operator\OperatorInterface;
 use App\Calculator\Result\ResultInterface;
 use App\Number\Number;
 
-class Multiply implements OperationInterface
+class Multiply extends MathOperationAbstract
 {
-    /**
-     * @var NumberOperand[]
-     */
-    private array $operands;
 
     const SHORTCUT_MULTIPLY_TO_ZERO_EQUALS_ZERO = 'shortcut_multiply_to_zero_equals_zero';
     private array $shortcutsUsed = [];
@@ -71,5 +68,10 @@ class Multiply implements OperationInterface
     public function getName(): string
     {
         return 'multiply';
+    }
+
+    public function getOperator(): OperatorInterface
+    {
+        return new \App\Calculator\Arithmetic\Operator\Multiply();
     }
 }
