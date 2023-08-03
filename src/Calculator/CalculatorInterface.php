@@ -4,6 +4,7 @@ namespace App\Calculator;
 
 use App\Calculator\Exception\InvalidOperandTypeException;
 use App\Calculator\Operand\OperandInterface;
+use App\Calculator\Operation\OperationInterface;
 use App\Calculator\Operator\OperatorInterface;
 use App\Calculator\Result\ResultInterface;
 
@@ -23,4 +24,8 @@ interface CalculatorInterface
         OperandInterface $right
     ): ResultInterface;
 
+    /**
+     * @return OperationInterface[]
+     */
+    public function getOperationsSupported(): array;
 }

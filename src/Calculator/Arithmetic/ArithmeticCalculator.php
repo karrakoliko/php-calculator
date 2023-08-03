@@ -25,11 +25,6 @@ class ArithmeticCalculator implements CalculatorInterface
         $this->operationsSupported = $operationsSupported;
     }
 
-    public function createOperation()
-    {
-
-    }
-
     public function calculate(OperandInterface $left, OperatorInterface $operator, OperandInterface $right): ResultInterface
     {
 
@@ -50,4 +45,8 @@ class ArithmeticCalculator implements CalculatorInterface
 
     }
 
+    public function getOperationsSupported(): array
+    {
+        return $this->operationsSupported;
+    }
 }
