@@ -53,7 +53,7 @@ class CalculatorController extends AbstractController
     {
         $leftStr = $request->get('left','');
         $operatorStr = $request->get('operator','');
-        $rightStr = $request->get('right','null');
+        $rightStr = $request->get('right','');
 
         if ($leftStr === '' || $operatorStr === '' || $rightStr === '') {
             return $this->showOperationForm();
