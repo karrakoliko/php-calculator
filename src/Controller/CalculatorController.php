@@ -2,17 +2,12 @@
 
 namespace App\Controller;
 
-use App\Calculator\Arithmetic\Expression\ArithmeticExpression;
-use App\Calculator\Arithmetic\Expression\EqualityExpression;
 use App\Calculator\Arithmetic\NumberOperand;
 use App\Calculator\Arithmetic\Operator\ArithmeticOperatorFactory;
 use App\Calculator\CalculatorInterface;
-use App\Calculator\Operation\OperationInterface;
-use App\Calculator\Operator\OperatorInterface;
 use App\Calculator\Result\ResultInterface;
 use App\Number\Exception\InvalidNumberException;
 use App\Number\Number;
-use App\Number\NumberInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,24 +37,10 @@ class CalculatorController extends AbstractController
 
     }
 
-    public function showError(string $message): Response
-    {
-        return $this->render('calculator/calculator.html.twig',
-            [
-                'error_message' => $message
-            ]
-        );
-    }
-
     public
     function showOperationForm(): Response
     {
         return $this->render('calculator/calculator.html.twig');
-    }
-
-    public function showResult(OperationInterface $operation, ResultInterface $result)
-    {
-
     }
 
     public
@@ -77,11 +58,30 @@ class CalculatorController extends AbstractController
 
             $result = $this->calculator->calculate($left, $operator, $right);
 
+            return $this->showResult($result);
+
         } catch (\TypeError|InvalidNumberException $e) {
             return $this->showError('Вы ввели некорректное число');
         }
-
         return $this->render('calculator/calculator.html.twig');
 
+    }
+
+    public function showResult(ResultInterface $result)
+    {
+        return $this->render('calculator/calculator.html.twig',
+            [
+                'calc_result' => $result
+            ]
+        );
+    }
+
+    public function showError(string $message): Response
+    {
+        return $this->render('calculator/calculator.html.twig',
+            [
+                'error_message' => $message
+            ]
+        );
     }
 }

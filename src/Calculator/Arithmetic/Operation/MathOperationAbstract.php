@@ -16,6 +16,9 @@ abstract class MathOperationAbstract implements OperationInterface
      */
     protected array $operands = [];
 
+    /**
+     * @return ArithmeticExpression
+     */
     public function toExpression(): ExpressionInterface
     {
         $expression = new ArithmeticExpression();

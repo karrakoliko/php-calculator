@@ -4,7 +4,7 @@ namespace App\Calculator\Arithmetic\Operation;
 
 use App\Calculator\Arithmetic\NumberOperand;
 use App\Calculator\Arithmetic\Operator\Minus;
-use App\Calculator\Arithmetic\Result\NumberResult;
+use App\Calculator\Arithmetic\Result\CalculationResult;
 use App\Calculator\Operand\OperandInterface;
 use App\Calculator\Operation\OperationInterface;
 use App\Calculator\Operator\OperatorInterface;
@@ -36,7 +36,7 @@ class Subtract extends MathOperationAbstract
 
         }, $initial);
 
-        return new NumberResult(Number::createFromString($result));
+        return new CalculationResult($this, Number::createFromString($result));
     }
 
     public function getShortcutsUsed(): array

@@ -27,9 +27,9 @@
                 <input type="submit" class="input-group__submit" value="Вычислить"/>
             </div>
         </form>
-        {% if result|default(false) %}
+        {% if calc_result|default(false) %}
             <div class="calculator__result">
-                5 * 6 = 30
+                {{ calc_result.toExpression().getAsString() }}
             </div>
         {% endif %}
         {% if error_message|default(false) %}

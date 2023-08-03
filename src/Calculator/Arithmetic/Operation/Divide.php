@@ -6,7 +6,7 @@ use App\Calculator\Arithmetic\NumberOperand;
 use App\Calculator\Arithmetic\Operation\Exception\DivisionByZeroException;
 use App\Calculator\Arithmetic\Operation\Exception\NoOperandsGivenException;
 use App\Calculator\Arithmetic\Operator\Division;
-use App\Calculator\Arithmetic\Result\NumberResult;
+use App\Calculator\Arithmetic\Result\CalculationResult;
 use App\Calculator\Operand\OperandInterface;
 use App\Calculator\Operator\OperatorInterface;
 use App\Calculator\Result\ResultInterface;
@@ -28,7 +28,7 @@ class Divide extends MathOperationAbstract
         if ($this->isDividingZero()) {
             $this->shortcutsUsed[] = self::SHORTCUT_DIVIDE_ZERO_TO_ANY_IS_ZERO;
 
-            return new NumberResult(Number::zero());
+            return new CalculationResult(Number::zero());
         }
 
         $numbers = array_map(function (NumberOperand $operand) {
@@ -47,7 +47,15 @@ class Divide extends MathOperationAbstract
 
         $number = Number::createFromString($result);
 
-        return new NumberResult($number);
+        return new CalculationResult($this, $number);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isDividingZero(): bool
+    {
+        return $this->operands[array_key_first($this->operands)]->getValue()->equals(Number::zero());
     }
 
     public function getShortcutsUsed(): array
@@ -79,14 +87,6 @@ class Divide extends MathOperationAbstract
         }
 
         return false;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isDividingZero(): bool
-    {
-        return $this->operands[array_key_first($this->operands)]->getValue()->equals(Number::zero());
     }
 
     public function getName(): string

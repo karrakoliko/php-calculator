@@ -3,6 +3,7 @@
 namespace App\Calculator\Arithmetic\Expression;
 
 use App\Calculator\Expression\ExpressionInterface;
+use App\Number\NumberInterface;
 
 class ArithmeticExpression implements ExpressionInterface
 {
@@ -22,5 +23,14 @@ class ArithmeticExpression implements ExpressionInterface
     public function getAsString(): string
     {
         return join(' ', $this->members);
+    }
+
+    public static function fromNumber(NumberInterface $number): ExpressionInterface
+    {
+        $expression = new self();
+
+        $expression->addMember($number->getValue());
+
+        return $expression;
     }
 }

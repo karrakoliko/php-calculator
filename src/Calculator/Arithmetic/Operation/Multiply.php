@@ -3,7 +3,7 @@
 namespace App\Calculator\Arithmetic\Operation;
 
 use App\Calculator\Arithmetic\NumberOperand;
-use App\Calculator\Arithmetic\Result\NumberResult;
+use App\Calculator\Arithmetic\Result\CalculationResult;
 use App\Calculator\Operand\OperandInterface;
 use App\Calculator\Operation\OperationInterface;
 use App\Calculator\Operator\OperatorInterface;
@@ -20,7 +20,7 @@ class Multiply extends MathOperationAbstract
     {
         if($this->hasZeroOperand()){
             $this->shortcutsUsed[] = self::SHORTCUT_MULTIPLY_TO_ZERO_EQUALS_ZERO;
-            return new NumberResult(Number::zero());
+            return new CalculationResult($this, Number::zero());
         }
 
         $numbers = array_map(function (NumberOperand $operand) {
@@ -33,7 +33,7 @@ class Multiply extends MathOperationAbstract
             return $carry * $item;
         }, $initial);
 
-        return new NumberResult(Number::createFromString($result));
+        return new CalculationResult($this, Number::createFromString($result));
     }
 
     public function getShortcutsUsed(): array
