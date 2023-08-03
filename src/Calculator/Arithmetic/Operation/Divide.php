@@ -28,7 +28,7 @@ class Divide extends MathOperationAbstract
         if ($this->isDividingZero()) {
             $this->shortcutsUsed[] = self::SHORTCUT_DIVIDE_ZERO_TO_ANY_IS_ZERO;
 
-            return new CalculationResult(Number::zero());
+            return new CalculationResult($this, Number::zero());
         }
 
         $numbers = array_map(function (NumberOperand $operand) {
