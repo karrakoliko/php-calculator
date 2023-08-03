@@ -15,14 +15,13 @@ class NumberOperand implements OperandInterface
         $this->number = $number;
     }
 
+    public static function createFromString(string $value): OperandInterface
+    {
+        return new NumberOperand(Number::createFromString($value));
+    }
 
     public function getValue(): NumberInterface
     {
         return $this->number;
-    }
-
-    public static function createFromString(string $value): OperandInterface
-    {
-        return new NumberOperand(Number::createFromString($value));
     }
 }

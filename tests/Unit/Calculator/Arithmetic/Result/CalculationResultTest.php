@@ -4,7 +4,6 @@ namespace App\Tests\Unit\Calculator\Arithmetic\Result;
 
 use App\Calculator\Arithmetic\NumberOperand;
 use App\Calculator\Arithmetic\Operation\Sum;
-use App\Number\Number;
 use PHPUnit\Framework\TestCase;
 
 class CalculationResultTest extends TestCase

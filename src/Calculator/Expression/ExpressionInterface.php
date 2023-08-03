@@ -2,7 +2,9 @@
 
 namespace App\Calculator\Expression;
 
-interface ExpressionInterface extends \Stringable
+use Stringable;
+
+interface ExpressionInterface extends Stringable
 {
 
     public function getAsString(): string;

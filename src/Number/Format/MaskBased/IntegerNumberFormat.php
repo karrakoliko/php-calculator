@@ -2,7 +2,9 @@
 
 namespace App\Number\Format\MaskBased;
 
-class IntegerNumberFormat implements MaskBasedInterface, \App\Number\Format\NumberFormatInterface
+use App\Number\Format\NumberFormatInterface;
+
+class IntegerNumberFormat implements MaskBasedInterface, NumberFormatInterface
 {
 
     public function getMaskRegexp(): string

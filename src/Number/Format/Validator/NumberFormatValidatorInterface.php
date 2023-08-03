@@ -10,8 +10,8 @@ interface NumberFormatValidatorInterface
     /**
      * @param $number
      * @param NumberFormatInterface $format
-     * @throws FormatNotSupportedException
      * @return bool
+     * @throws FormatNotSupportedException
      */
     public function validate($number, NumberFormatInterface $format): bool;
 

@@ -5,7 +5,6 @@ namespace App\Tests\Unit\Calculator\Operation;
 use App\Calculator\Arithmetic\NumberOperand;
 use App\Calculator\Arithmetic\Operation\Divide;
 use App\Calculator\Arithmetic\Operation\Exception\DivisionByZeroException;
-use App\Number\Number;
 use PHPUnit\Framework\TestCase;
 
 class DivideTest extends TestCase

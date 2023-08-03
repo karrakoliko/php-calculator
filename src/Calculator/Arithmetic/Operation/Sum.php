@@ -6,7 +6,6 @@ use App\Calculator\Arithmetic\NumberOperand;
 use App\Calculator\Arithmetic\Operator\Plus;
 use App\Calculator\Arithmetic\Result\CalculationResult;
 use App\Calculator\Operand\OperandInterface;
-use App\Calculator\Operation\OperationInterface;
 use App\Calculator\Operator\OperatorInterface;
 use App\Calculator\Result\ResultInterface;
 use App\Number\Number;

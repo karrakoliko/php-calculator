@@ -2,6 +2,7 @@
 
 namespace App\Lib\NotificationBag;
 
+use ArrayIterator;
 use Traversable;
 
 class NotificationBag implements NotificationBagInterface
@@ -12,7 +13,7 @@ class NotificationBag implements NotificationBagInterface
 
     public function getIterator(): Traversable
     {
-        return new \ArrayIterator($this->notifications);
+        return new ArrayIterator($this->notifications);
     }
 
     public function add(NotificationInterface $notification): void
@@ -25,7 +26,7 @@ class NotificationBag implements NotificationBagInterface
         $exceptions = [];
 
 
-        foreach ($this as $message){
+        foreach ($this as $message) {
             $exceptions[] = $this->resolveExceptionClassName($exceptionClassNameOrResolver, $message);
         }
 

@@ -10,6 +10,15 @@ class ArithmeticExpression implements ExpressionInterface
 
     protected array $members;
 
+    public static function fromNumber(NumberInterface $number): ExpressionInterface
+    {
+        $expression = new self();
+
+        $expression->addMember($number->getValue());
+
+        return $expression;
+    }
+
     public function addMember(string $member): void
     {
         $this->members[] = $member;
@@ -23,14 +32,5 @@ class ArithmeticExpression implements ExpressionInterface
     public function getAsString(): string
     {
         return join(' ', $this->members);
-    }
-
-    public static function fromNumber(NumberInterface $number): ExpressionInterface
-    {
-        $expression = new self();
-
-        $expression->addMember($number->getValue());
-
-        return $expression;
     }
 }

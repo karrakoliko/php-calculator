@@ -4,6 +4,7 @@ namespace App\Number\Format\Guesser;
 
 use App\Number\Format\NumberFormatInterface;
 use App\Number\Format\Validator\NumberFormatValidatorInterface;
+use LogicException;
 
 class RegisteredNumberFormatGuesser implements NumberFormatGuesserInterface
 {
@@ -23,15 +24,15 @@ class RegisteredNumberFormatGuesser implements NumberFormatGuesserInterface
 
     public function guess($number): ?NumberFormatInterface
     {
-        if(!count($this->formats)){
-            throw new \LogicException('No number format registered');
+        if (!count($this->formats)) {
+            throw new LogicException('No number format registered');
         }
 
         $guessed = null;
 
-        foreach ($this->formats as $format){
+        foreach ($this->formats as $format) {
 
-            if($this->validator->validate($number,$format)){
+            if ($this->validator->validate($number, $format)) {
                 $guessed = $format;
                 break;
             }

@@ -15,13 +15,13 @@ interface CalculatorInterface
      * @param OperandInterface $left
      * @param OperatorInterface $operator
      * @param OperandInterface $right
-     * @throws InvalidOperandTypeException
      * @return ResultInterface
+     * @throws InvalidOperandTypeException
      */
     public function calculate(
-        OperandInterface $left,
+        OperandInterface  $left,
         OperatorInterface $operator,
-        OperandInterface $right
+        OperandInterface  $right
     ): ResultInterface;
 
     /**

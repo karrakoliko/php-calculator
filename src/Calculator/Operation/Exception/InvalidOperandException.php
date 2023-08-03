@@ -2,7 +2,9 @@
 
 namespace App\Calculator\Operation\Exception;
 
-class InvalidOperandException extends \RuntimeException
+use RuntimeException;
+
+class InvalidOperandException extends RuntimeException
 {
 
 }

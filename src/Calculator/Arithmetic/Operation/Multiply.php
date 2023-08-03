@@ -5,7 +5,6 @@ namespace App\Calculator\Arithmetic\Operation;
 use App\Calculator\Arithmetic\NumberOperand;
 use App\Calculator\Arithmetic\Result\CalculationResult;
 use App\Calculator\Operand\OperandInterface;
-use App\Calculator\Operation\OperationInterface;
 use App\Calculator\Operator\OperatorInterface;
 use App\Calculator\Result\ResultInterface;
 use App\Number\Number;
@@ -19,7 +18,7 @@ class Multiply extends MathOperationAbstract
 
     public function exec(): ResultInterface
     {
-        if($this->hasZeroOperand()){
+        if ($this->hasZeroOperand()) {
             $this->shortcutsUsed[] = self::SHORTCUT_MULTIPLY_TO_ZERO_EQUALS_ZERO;
             return new CalculationResult($this, Number::zero());
         }
@@ -35,11 +34,6 @@ class Multiply extends MathOperationAbstract
         }, $initial);
 
         return new CalculationResult($this, Number::createFromString($result));
-    }
-
-    public function getShortcutsUsed(): array
-    {
-        return $this->shortcutsUsed;
     }
 
     /**
@@ -58,6 +52,11 @@ class Multiply extends MathOperationAbstract
         }
 
         return $hasZeroOperand;
+    }
+
+    public function getShortcutsUsed(): array
+    {
+        return $this->shortcutsUsed;
     }
 
     public function __invoke(OperandInterface ...$operands)

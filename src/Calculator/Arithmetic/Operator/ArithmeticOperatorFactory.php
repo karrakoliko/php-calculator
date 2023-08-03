@@ -3,9 +3,9 @@
 namespace App\Calculator\Arithmetic\Operator;
 
 use App\Calculator\Arithmetic\Operation\Divide as DivideOperation;
+use App\Calculator\Arithmetic\Operation\Multiply as MultiplyOperation;
 use App\Calculator\Arithmetic\Operation\Subtract as SubtractOperation;
 use App\Calculator\Arithmetic\Operation\Sum as SumOperation;
-use App\Calculator\Arithmetic\Operation\Multiply as MultiplyOperation;
 use App\Calculator\Operator\OperatorInterface;
 use InvalidArgumentException;
 

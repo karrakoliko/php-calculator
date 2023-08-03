@@ -6,6 +6,7 @@ class Notification implements NotificationInterface
 {
 
     private string $message;
+
     public function __construct(string $message)
     {
         $this->message = $message;

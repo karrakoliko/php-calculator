@@ -6,6 +6,7 @@ use App\Number\Exception\InvalidNumberException;
 use App\Number\Format\MaskBased\DecimalNumberFormat;
 use App\Number\Format\NumberFormatFactory;
 use App\Number\Number;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 class NumberTest extends TestCase
@@ -69,7 +70,7 @@ class NumberTest extends TestCase
      */
     public function testCreateFromStringThrowsIfInvalidNumberGiven(string $val)
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         Number::createFromString($val)->getValue();
     }
 

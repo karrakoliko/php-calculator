@@ -7,8 +7,6 @@ use App\Calculator\Operator\OperatorInterface;
 abstract class ArithmeticOperatorAbstract implements OperatorInterface
 {
 
-    abstract function getSign(): string;
-
     /**
      * @param ArithmeticOperatorAbstract $operator
      * @return bool
@@ -17,5 +15,7 @@ abstract class ArithmeticOperatorAbstract implements OperatorInterface
     {
         return $operator->getSign() === $this->getSign();
     }
+
+    abstract function getSign(): string;
 
 }

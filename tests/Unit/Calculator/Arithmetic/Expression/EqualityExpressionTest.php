@@ -14,11 +14,11 @@ class EqualityExpressionTest extends TestCase
 
         $expr1 = $this->createStub(ArithmeticExpression::class);
         $expr1->method('getAsString')->willReturn('7 * 5');
-        
+
         $expr2 = $this->createStub(ArithmeticExpression::class);
         $expr2->method('getAsString')->willReturn('35');
 
-        $equalityExpr = new EqualityExpression($expr1,$expr2);
+        $equalityExpr = new EqualityExpression($expr1, $expr2);
 
         $this->assertEquals('7 * 5 = 35', $equalityExpr->getAsString());
 

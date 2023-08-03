@@ -52,8 +52,8 @@ class ArithmeticCalculator implements CalculatorInterface
      */
     protected function resolveOperation(OperatorInterface $operator): OperationInterface
     {
-        foreach ($this->operationsSupported as $operation){
-            if($operation->getOperator()->equals($operator)){
+        foreach ($this->operationsSupported as $operation) {
+            if ($operation->getOperator()->equals($operator)) {
                 return new $operation;
             }
         }

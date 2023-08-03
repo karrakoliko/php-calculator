@@ -4,7 +4,6 @@ namespace App\Tests\Unit\Calculator\Operation;
 
 use App\Calculator\Arithmetic\NumberOperand;
 use App\Calculator\Arithmetic\Operation\Multiply;
-use App\Number\Number;
 use PHPUnit\Framework\TestCase;
 
 class MultiplyTest extends TestCase

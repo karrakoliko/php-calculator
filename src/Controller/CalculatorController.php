@@ -7,18 +7,20 @@ use App\Calculator\Arithmetic\Operation\Exception\DivisionByZeroException;
 use App\Calculator\Arithmetic\Operator\ArithmeticOperatorFactory;
 use App\Calculator\CalculatorInterface;
 use App\Calculator\Exception\InvalidOperandTypeException;
+use App\Calculator\Operation\OperationInterface;
 use App\Calculator\Result\ResultInterface;
 use App\Number\Exception\InvalidNumberException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use TypeError;
 
 class CalculatorController extends AbstractController
 {
 
     private CalculatorInterface $calculator;
     /**
-     * @var \App\Calculator\Operation\OperationInterface[]
+     * @var OperationInterface[]
      */
     private array $operationsSupported;
 
@@ -38,7 +40,7 @@ class CalculatorController extends AbstractController
         try {
             return $this->calc($request);
 
-        } catch (\TypeError $e) {
+        } catch (TypeError $e) {
             return $this->showOperationForm();
         }
 
@@ -58,7 +60,7 @@ class CalculatorController extends AbstractController
         $operatorStr = $request->get('operator');
         $rightStr = $request->get('right');
 
-        if($leftStr === null || $operatorStr === null || $rightStr === null){
+        if ($leftStr === null || $operatorStr === null || $rightStr === null) {
             return $this->showOperationForm();
         }
 
@@ -72,9 +74,9 @@ class CalculatorController extends AbstractController
 
             return $this->showResult($result);
 
-        } catch (\TypeError|InvalidNumberException|InvalidOperandTypeException $e) {
+        } catch (TypeError|InvalidNumberException|InvalidOperandTypeException $e) {
             return $this->showError('Вы ввели некорректное число');
-        } catch (DivisionByZeroException $e){
+        } catch (DivisionByZeroException $e) {
             return $this->showError('Деление на 0');
         }
 

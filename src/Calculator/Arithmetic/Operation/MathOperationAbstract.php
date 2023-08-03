@@ -36,7 +36,7 @@ abstract class MathOperationAbstract implements OperationInterface
 
             $expression->addMember($operand->getValue());
 
-            if($key !== $keyLast){
+            if ($key !== $keyLast) {
                 $expression->addMember($operator->getSign());
             }
 

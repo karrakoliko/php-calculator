@@ -2,7 +2,9 @@
 
 namespace App\Number\Format\Validator\Exception;
 
-class NumberFormatValidatorException extends \Exception
+use Exception;
+
+class NumberFormatValidatorException extends Exception
 {
 
 }
