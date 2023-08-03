@@ -21,6 +21,7 @@ body, html {
 
 .input-group__label {
     font-weight: normal;
+    cursor: pointer;
 }
 
 .input-group__label + .input-group__input {

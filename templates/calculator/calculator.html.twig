@@ -9,11 +9,11 @@
         <h1 class="calculator__title">Калькулятор</h1>
         <form class="form calculator__form" id="calculator" action="{{ path('calculator') }}" method="post">
             <div class="input-group">
-                <div class="input-group__label">Аргумент 1</div>
-                <input class="input-group__input" id="calculator__left" name="left" type="text"/>
+                <label for="calculator__left" class="input-group__label">Аргумент 1</label>
+                <input class="input-group__input" autofocus id="calculator__left" name="left" type="text"/>
             </div>
             <div class="input-group">
-                <div class="input-group__label">Операция</div>
+                <label for="calculator__operator" class="input-group__label">Операция</label>
                 <select class="input-group__input" id="calculator__operator" name="operator">
                     <option disabled></option>
                     {% for operation in calc_operations_supported %}
@@ -22,7 +22,7 @@
                 </select>
             </div>
             <div class="input-group">
-                <div class="input-group__label">Аргумент 2</div>
+                <label for="calculator__right" class="input-group__label">Аргумент 2</label>
                 <input class="input-group__input" id="calculator__right" type="text" name="right"/>
             </div>
             <div class="input-group">

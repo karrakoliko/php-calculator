@@ -19,15 +19,10 @@ class CalculatorController extends AbstractController
 {
 
     private CalculatorInterface $calculator;
-    /**
-     * @var OperationInterface[]
-     */
-    private array $operationsSupported;
 
     public function __construct(CalculatorInterface $calculator)
     {
         $this->calculator = $calculator;
-        $this->operationsSupported = $calculator->getOperationsSupported();
     }
 
     public function index(Request $request): Response
@@ -56,11 +51,11 @@ class CalculatorController extends AbstractController
     public
     function calc(Request $request): Response
     {
-        $leftStr = $request->get('left');
-        $operatorStr = $request->get('operator');
-        $rightStr = $request->get('right');
+        $leftStr = $request->get('left','');
+        $operatorStr = $request->get('operator','');
+        $rightStr = $request->get('right','null');
 
-        if ($leftStr === null || $operatorStr === null || $rightStr === null) {
+        if ($leftStr === '' || $operatorStr === '' || $rightStr === '') {
             return $this->showOperationForm();
         }
 
