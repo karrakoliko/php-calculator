@@ -5,7 +5,6 @@ namespace App\Calculator\Operator;
 interface OperatorInterface
 {
 
-    public function resolveOperationClassName(): string;
-
+    public function equals(OperatorInterface $operator): bool;
 
 }

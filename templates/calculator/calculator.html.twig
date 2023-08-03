@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Калькулятор{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="/all.css"/>
+{% endblock %}
+{% block body %}
+    <div class="calculator">
+        <h1 class="calculator__title">Калькулятор</h1>
+        <form class="form calculator__form" id="calculator" action="{{ path('calculator') }}" method="post">
+            <div class="input-group">
+                <label for="calculator__left" class="input-group__label">Аргумент 1</label>
+                <input class="input-group__input" autofocus id="calculator__left" name="left" type="text"/>
+            </div>
+            <div class="input-group">
+                <label for="calculator__operator" class="input-group__label">Операция</label>
+                <select class="input-group__input" id="calculator__operator" name="operator">
+                    <option disabled></option>
+                    {% for operation in calc_operations_supported %}
+                        <option value="{{ operation.getName() }}">{{ operation.getOperator().getSign() }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="calculator__right" class="input-group__label">Аргумент 2</label>
+                <input class="input-group__input" id="calculator__right" type="text" name="right"/>
+            </div>
+            <div class="input-group">
+                <input type="submit" class="input-group__submit" value="Вычислить"/>
+            </div>
+        </form>
+        {% if calc_result|default(false) %}
+            <div class="calculator__result">
+                {{ calc_result.toExpression().getAsString() }}
+            </div>
+        {% endif %}
+        {% if error_message|default(false) %}
+        <div class="calculator__message calculator__message_error">
+            {{ error_message }}
+        </div>
+        {% endif %}
+
+    </div>
+{% endblock %}

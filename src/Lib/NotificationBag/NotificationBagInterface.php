@@ -2,7 +2,10 @@
 
 namespace App\Lib\NotificationBag;
 
-interface NotificationBagInterface extends \IteratorAggregate
+use Exception;
+use IteratorAggregate;
+
+interface NotificationBagInterface extends IteratorAggregate
 {
 
     public function add(NotificationInterface $notification): void;
@@ -13,7 +16,7 @@ interface NotificationBagInterface extends \IteratorAggregate
      *      ... return NeededException::class;
      *      }
      * </pre>
-     * @return \Exception[]
+     * @return Exception[]
      */
     public function toExceptionTrace($exceptionClassNameOrResolver): array;
 

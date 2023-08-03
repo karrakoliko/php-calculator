@@ -3,18 +3,17 @@
 namespace App\Calculator\Arithmetic\Operation;
 
 use App\Calculator\Arithmetic\NumberOperand;
-use App\Calculator\Arithmetic\Result\NumberResult;
+use App\Calculator\Arithmetic\Operator\Plus;
+use App\Calculator\Arithmetic\Result\CalculationResult;
 use App\Calculator\Operand\OperandInterface;
-use App\Calculator\Operation\OperationInterface;
+use App\Calculator\Operator\OperatorInterface;
 use App\Calculator\Result\ResultInterface;
 use App\Number\Number;
 
-class Sum implements OperationInterface
+class Sum extends MathOperationAbstract
 {
-    /**
-     * @var NumberOperand[]
-     */
-    private array $operands;
+
+    const NAME = 'sum';
 
     public function __invoke(OperandInterface ...$operands)
     {
@@ -32,7 +31,7 @@ class Sum implements OperationInterface
 
         $result = array_sum($numbers);
 
-        return new NumberResult(Number::createFromString($result));
+        return new CalculationResult($this, Number::createFromString($result));
     }
 
     public function getShortcutsUsed(): array
@@ -40,4 +39,13 @@ class Sum implements OperationInterface
         return [];
     }
 
+    public function getName(): string
+    {
+        return self::NAME;
+    }
+
+    public function getOperator(): OperatorInterface
+    {
+        return new Plus();
+    }
 }

@@ -2,14 +2,11 @@
 
 namespace App\Calculator\Arithmetic\Operator;
 
-use App\Calculator\Arithmetic\Operation\Divide;
-use App\Calculator\Operator\OperatorInterface;
-
-class Division implements OperatorInterface
+class Division extends ArithmeticOperatorAbstract
 {
 
-    public function resolveOperationClassName(): string
+    function getSign(): string
     {
-        return Divide::class;
+        return '/';
     }
 }

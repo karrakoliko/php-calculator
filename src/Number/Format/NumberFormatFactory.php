@@ -4,6 +4,7 @@ namespace App\Number\Format;
 
 use App\Number\Format\MaskBased\DecimalNumberFormat;
 use App\Number\Format\MaskBased\IntegerNumberFormat;
+use LogicException;
 
 class NumberFormatFactory
 {
@@ -14,11 +15,6 @@ class NumberFormatFactory
     public static function int(): NumberFormatInterface
     {
         return self::createByName(self::FORMAT_INT);
-    }
-
-    public static function decimal(): NumberFormatInterface
-    {
-        return self::createByName(self::FORMAT_DECIMAL);
     }
 
     public static function createByName(string $name): NumberFormatInterface
@@ -33,7 +29,12 @@ class NumberFormatFactory
             return new DecimalNumberFormat();
         }
 
-        throw new \LogicException(sprintf('Unknown format name %s', $name));
+        throw new LogicException(sprintf('Unknown format name %s', $name));
+    }
+
+    public static function decimal(): NumberFormatInterface
+    {
+        return self::createByName(self::FORMAT_DECIMAL);
     }
 
 }

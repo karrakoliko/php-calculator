@@ -20,5 +20,20 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    calculator.operations.divide:
+        class: 'App\Calculator\Arithmetic\Operation\Divide'
+    calculator.operations.multiply:
+        class: 'App\Calculator\Arithmetic\Operation\Multiply'
+    calculator.operations.subtract:
+        class: 'App\Calculator\Arithmetic\Operation\Subtract'
+    calculator.operations.sum:
+        class: 'App\Calculator\Arithmetic\Operation\Sum'
+            
+    App\Calculator\CalculatorInterface:
+        class: 'App\Calculator\Arithmetic\ArithmeticCalculator'
+        bind:
+            $operationsSupported:
+                - '@calculator.operations.sum'
+                - '@calculator.operations.divide'
+                - '@calculator.operations.multiply'
+                - '@calculator.operations.subtract'

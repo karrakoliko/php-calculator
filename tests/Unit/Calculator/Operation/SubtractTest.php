@@ -22,8 +22,8 @@ class SubtractTest extends TestCase
     public function testExec(string $leftStr, string $rightStr, string $resultString)
     {
 
-        $op1 = new NumberOperand(Number::createFromString($leftStr));
-        $op2 = new NumberOperand(Number::createFromString($rightStr));
+        $op1 = NumberOperand::createFromString($leftStr);
+        $op2 = NumberOperand::createFromString($rightStr);
 
         $operation = new Subtract();
 
@@ -45,10 +45,10 @@ class SubtractTest extends TestCase
     public function subtractProvider(): array
     {
         return [
-            '2-2=0'=>['2','2','0'],
-            '1-2=-1'=>['1','2','-1'],
-            '1.6-1=0.6'=>['1.6','1','0.6'],
-            '1.6001-2=-0.3999'=>['1.6001','2','-0.3999'],
+            '2-2=0' => ['2', '2', '0'],
+            '1-2=-1' => ['1', '2', '-1'],
+            '1.6-1=0.6' => ['1.6', '1', '0.6'],
+            '1.6001-2=-0.3999' => ['1.6001', '2', '-0.3999'],
         ];
     }
 

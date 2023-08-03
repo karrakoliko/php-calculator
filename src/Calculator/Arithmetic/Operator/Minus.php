@@ -2,14 +2,10 @@
 
 namespace App\Calculator\Arithmetic\Operator;
 
-use App\Calculator\Arithmetic\Operation\Subtract;
-use App\Calculator\Operator\OperatorInterface;
-
-class Minus implements OperatorInterface
+class Minus extends ArithmeticOperatorAbstract
 {
-
-    public function resolveOperationClassName(): string
+    function getSign(): string
     {
-        return Subtract::class;
+        return '-';
     }
 }

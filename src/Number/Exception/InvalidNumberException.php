@@ -2,7 +2,9 @@
 
 namespace App\Number\Exception;
 
-class InvalidNumberException extends \InvalidArgumentException
+use InvalidArgumentException;
+
+class InvalidNumberException extends InvalidArgumentException
 {
 
 }

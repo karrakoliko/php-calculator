@@ -27,10 +27,10 @@ class RegisteredNumberFormatsGuesserTest extends TestCase
 
         $actual = $guesser->guess($numberString);
 
-        if($actual !== null){
+        if ($actual !== null) {
             $this->assertEquals($expected->getName(), $actual->getName());
         } else {
-            $this->assertEquals($expected,$actual);
+            $this->assertEquals($expected, $actual);
         }
 
     }

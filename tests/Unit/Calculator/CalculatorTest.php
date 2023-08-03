@@ -2,14 +2,35 @@
 
 namespace App\Tests\Unit\Calculator;
 
+use App\Calculator\Arithmetic\ArithmeticCalculator;
 use App\Calculator\Arithmetic\NumberOperand;
+use App\Calculator\Arithmetic\Operation\Multiply;
 use App\Calculator\Arithmetic\Operator\ArithmeticOperatorFactory;
+use App\Calculator\Exception\OperationNotSupported;
 use App\Number\Number;
 use App\Tests\Unit\Calculator\helpers\NumberCalculatorFactory;
 use PHPUnit\Framework\TestCase;
 
 class CalculatorTest extends TestCase
 {
+
+    public function testSupportedOperationsRespected()
+    {
+        $this->expectException(OperationNotSupported::class);
+
+        $operations = [new Multiply()];
+
+        $multiplyCalc = new ArithmeticCalculator($operations);
+
+        $left = $this->createStub(NumberOperand::class);
+        $right = $this->createStub(NumberOperand::class);
+
+        $operator = ArithmeticOperatorFactory::createBySign('-');
+
+        $multiplyCalc->calculate($left, $operator, $right);
+
+    }
+
     /**
      * @dataProvider calcResultProvider
      * @return void
@@ -18,8 +39,8 @@ class CalculatorTest extends TestCase
     {
         $calc = NumberCalculatorFactory::creatArithmetic();
 
-        $left = new NumberOperand(Number::createFromString($leftString));
-        $right = new NumberOperand(Number::createFromString($rightString));
+        $left = NumberOperand::createFromString($leftString);
+        $right = NumberOperand::createFromString($rightString);
 
         $operator = ArithmeticOperatorFactory::createBySign($operatorSign);
 
