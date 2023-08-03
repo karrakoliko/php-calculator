@@ -3,11 +3,12 @@
 namespace App\Controller;
 
 use App\Calculator\Arithmetic\NumberOperand;
+use App\Calculator\Arithmetic\Operation\Exception\DivisionByZeroException;
 use App\Calculator\Arithmetic\Operator\ArithmeticOperatorFactory;
 use App\Calculator\CalculatorInterface;
+use App\Calculator\Exception\InvalidOperandTypeException;
 use App\Calculator\Result\ResultInterface;
 use App\Number\Exception\InvalidNumberException;
-use App\Number\Number;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,14 +17,20 @@ class CalculatorController extends AbstractController
 {
 
     private CalculatorInterface $calculator;
+    /**
+     * @var \App\Calculator\Operation\OperationInterface[]
+     */
+    private array $operationsSupported;
 
     public function __construct(CalculatorInterface $calculator)
     {
         $this->calculator = $calculator;
+        $this->operationsSupported = $calculator->getOperationsSupported();
     }
 
     public function index(Request $request): Response
     {
+
         if (!$request->isMethod('POST')) {
             return $this->showOperationForm();
         }
@@ -37,10 +44,11 @@ class CalculatorController extends AbstractController
 
     }
 
-    public
-    function showOperationForm(): Response
+    public function showOperationForm(): Response
     {
-        return $this->render('calculator/calculator.html.twig');
+        return $this->render('calculator/calculator.html.twig', [
+            'calc_operations_supported' => $this->calculator->getOperationsSupported()
+        ]);
     }
 
     public
@@ -50,20 +58,25 @@ class CalculatorController extends AbstractController
         $operatorStr = $request->get('operator');
         $rightStr = $request->get('right');
 
+        if($leftStr === null || $operatorStr === null || $rightStr === null){
+            return $this->showOperationForm();
+        }
+
         try {
 
             $left = NumberOperand::createFromString($leftStr);
-            $operator = ArithmeticOperatorFactory::createByName($operatorStr);
+            $operator = ArithmeticOperatorFactory::createByOperationName($operatorStr);
             $right = NumberOperand::createFromString($rightStr);
 
             $result = $this->calculator->calculate($left, $operator, $right);
 
             return $this->showResult($result);
 
-        } catch (\TypeError|InvalidNumberException $e) {
+        } catch (\TypeError|InvalidNumberException|InvalidOperandTypeException $e) {
             return $this->showError('Вы ввели некорректное число');
+        } catch (DivisionByZeroException $e){
+            return $this->showError('Деление на 0');
         }
-        return $this->render('calculator/calculator.html.twig');
 
     }
 
@@ -71,7 +84,8 @@ class CalculatorController extends AbstractController
     {
         return $this->render('calculator/calculator.html.twig',
             [
-                'calc_result' => $result
+                'calc_result' => $result,
+                'calc_operations_supported' => $this->calculator->getOperationsSupported()
             ]
         );
     }
@@ -80,7 +94,8 @@ class CalculatorController extends AbstractController
     {
         return $this->render('calculator/calculator.html.twig',
             [
-                'error_message' => $message
+                'error_message' => $message,
+                'calc_operations_supported' => $this->calculator->getOperationsSupported()
             ]
         );
     }

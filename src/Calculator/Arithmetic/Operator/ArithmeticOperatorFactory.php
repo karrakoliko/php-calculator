@@ -2,27 +2,31 @@
 
 namespace App\Calculator\Arithmetic\Operator;
 
+use App\Calculator\Arithmetic\Operation\Divide as DivideOperation;
+use App\Calculator\Arithmetic\Operation\Subtract as SubtractOperation;
+use App\Calculator\Arithmetic\Operation\Sum as SumOperation;
+use App\Calculator\Arithmetic\Operation\Multiply as MultiplyOperation;
 use App\Calculator\Operator\OperatorInterface;
 use InvalidArgumentException;
 
 class ArithmeticOperatorFactory
 {
 
-    public static function createByName(string $name): OperatorInterface
+    public static function createByOperationName(string $name): OperatorInterface
     {
-        if ($name === 'plus') {
+        if ($name === SumOperation::NAME) {
             return new Plus();
         }
 
-        if ($name === 'minus') {
+        if ($name === SubtractOperation::NAME) {
             return new Minus();
         }
 
-        if ($name === 'divide') {
+        if ($name === DivideOperation::NAME) {
             return new Division();
         }
 
-        if ($name === 'multiply') {
+        if ($name === MultiplyOperation::NAME) {
             return new Multiply();
         }
 

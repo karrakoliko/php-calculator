@@ -14,6 +14,8 @@ use App\Number\Number;
 class Sum extends MathOperationAbstract
 {
 
+    const NAME = 'sum';
+
     public function __invoke(OperandInterface ...$operands)
     {
         $this->operands = $operands;
@@ -40,7 +42,7 @@ class Sum extends MathOperationAbstract
 
     public function getName(): string
     {
-        return 'sum';
+        return self::NAME;
     }
 
     public function getOperator(): OperatorInterface

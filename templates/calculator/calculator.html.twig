@@ -16,7 +16,9 @@
                 <div class="input-group__label">Операция</div>
                 <select class="input-group__input" id="calculator__operator" name="operator">
                     <option disabled></option>
-                    <option selected value="plus">+</option>
+                    {% for operation in calc_operations_supported %}
+                        <option value="{{ operation.getName() }}">{{ operation.getOperator().getSign() }}</option>
+                    {% endfor %}
                 </select>
             </div>
             <div class="input-group">

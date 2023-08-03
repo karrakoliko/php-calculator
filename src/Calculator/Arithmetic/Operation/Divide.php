@@ -15,9 +15,14 @@ use App\Number\Number;
 class Divide extends MathOperationAbstract
 {
     const SHORTCUT_DIVIDE_ZERO_TO_ANY_IS_ZERO = 'divide_zero_to_any_is_zero';
+    const NAME = 'divide';
 
     private array $shortcutsUsed = [];
 
+    /**
+     * @return ResultInterface
+     * @throws NoOperandsGivenException
+     */
     public function exec(): ResultInterface
     {
 
@@ -91,7 +96,7 @@ class Divide extends MathOperationAbstract
 
     public function getName(): string
     {
-        return 'divide';
+        return self::NAME;
     }
 
     public function getOperator(): OperatorInterface

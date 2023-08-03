@@ -14,6 +14,8 @@ use App\Number\Number;
 class Subtract extends MathOperationAbstract
 {
 
+    const NAME = 'subtract';
+
     public function __invoke(OperandInterface ...$operands)
     {
         $this->operands = $operands;
@@ -46,7 +48,7 @@ class Subtract extends MathOperationAbstract
 
     public function getName(): string
     {
-        return 'substract';
+        return self::NAME;
     }
 
     public function getOperator(): OperatorInterface

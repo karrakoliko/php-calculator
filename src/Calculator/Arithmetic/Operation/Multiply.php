@@ -14,6 +14,7 @@ class Multiply extends MathOperationAbstract
 {
 
     const SHORTCUT_MULTIPLY_TO_ZERO_EQUALS_ZERO = 'shortcut_multiply_to_zero_equals_zero';
+    const NAME = 'multiply';
     private array $shortcutsUsed = [];
 
     public function exec(): ResultInterface
@@ -67,7 +68,7 @@ class Multiply extends MathOperationAbstract
 
     public function getName(): string
     {
-        return 'multiply';
+        return self::NAME;
     }
 
     public function getOperator(): OperatorInterface

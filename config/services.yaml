@@ -33,7 +33,7 @@ services:
         class: 'App\Calculator\Arithmetic\ArithmeticCalculator'
         bind:
             $operationsSupported:
+                - '@calculator.operations.sum'
                 - '@calculator.operations.divide'
                 - '@calculator.operations.multiply'
                 - '@calculator.operations.subtract'
-                - '@calculator.operations.sum'

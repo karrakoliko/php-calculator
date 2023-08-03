@@ -26,6 +26,14 @@ class ArithmeticCalculator implements CalculatorInterface
         $this->operationsSupported = $operationsSupported;
     }
 
+    /**
+     * @param OperandInterface $left
+     * @param OperatorInterface $operator
+     * @param OperandInterface $right
+     * @return ResultInterface
+     * @throws InvalidOperandTypeException
+     * @throws OperationNotSupported
+     */
     public function calculate(OperandInterface $left, OperatorInterface $operator, OperandInterface $right): ResultInterface
     {
 
