@@ -61,11 +61,19 @@ body, html {
     background: #3525b4;
 }
 
-.calculator__result {
+.calculator__message, .calculator__result {
     width: 100%;
-    background: #cae9dd;
+    padding: 1em;
     margin: .5em .5ch;
+}
+
+.calculator__message_error {
+    background: #a10317;
+    color: #fff;
+}
+
+.calculator__result {
+    background: #cae9dd;
     font-weight: bolder;
     color: #045b3a;
-    padding: 1em;
 }

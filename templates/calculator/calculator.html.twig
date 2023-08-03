@@ -7,7 +7,7 @@
 {% block body %}
     <div class="calculator">
         <h1 class="calculator__title">Калькулятор</h1>
-        <form class="form calculator__form" id="calculator" action="" method="post">
+        <form class="form calculator__form" id="calculator" action="{{ path('calculator') }}" method="post">
             <div class="input-group">
                 <div class="input-group__label">Аргумент 1</div>
                 <input class="input-group__input" id="calculator__left" name="left" type="text"/>
@@ -15,7 +15,8 @@
             <div class="input-group">
                 <div class="input-group__label">Операция</div>
                 <select class="input-group__input" id="calculator__operator" name="operator">
-                    <option disabled selected></option>
+                    <option disabled></option>
+                    <option selected value="plus">+</option>
                 </select>
             </div>
             <div class="input-group">
@@ -23,12 +24,19 @@
                 <input class="input-group__input" id="calculator__right" type="text" name="right"/>
             </div>
             <div class="input-group">
-                <button class="input-group__submit">Вычислить</button>
+                <input type="submit" class="input-group__submit" value="Вычислить"/>
             </div>
         </form>
-        <div class="calculator__result">
-            5 * 6 = 30
+        {% if result|default(false) %}
+            <div class="calculator__result">
+                5 * 6 = 30
+            </div>
+        {% endif %}
+        {% if error_message|default(false) %}
+        <div class="calculator__message calculator__message_error">
+            {{ error_message }}
         </div>
+        {% endif %}
 
     </div>
 {% endblock %}
