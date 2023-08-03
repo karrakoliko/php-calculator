@@ -95,4 +95,9 @@ class Divide extends MathOperationAbstract
     {
         return $this->operands[array_key_first($this->operands)]->getValue()->equals(Number::zero());
     }
+
+    public function getName(): string
+    {
+        return 'divide';
+    }
 }

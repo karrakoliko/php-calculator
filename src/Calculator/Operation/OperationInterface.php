@@ -19,4 +19,6 @@ interface OperationInterface
 
     public function __invoke(OperandInterface ...$operands);
 
+    public function getName(): string;
+
 }

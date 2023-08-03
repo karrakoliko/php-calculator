@@ -40,4 +40,8 @@ class Sum implements OperationInterface
         return [];
     }
 
+    public function getName(): string
+    {
+        return 'sum';
+    }
 }

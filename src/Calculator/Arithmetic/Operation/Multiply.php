@@ -67,4 +67,9 @@ class Multiply implements OperationInterface
         $this->operands = $operands;
         return $this;
     }
+
+    public function getName(): string
+    {
+        return 'multiply';
+    }
 }

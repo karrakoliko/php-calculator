@@ -45,4 +45,9 @@ class Subtract implements OperationInterface
     {
         return [];
     }
+
+    public function getName(): string
+    {
+        return 'substract';
+    }
 }
