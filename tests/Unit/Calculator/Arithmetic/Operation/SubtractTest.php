@@ -1,21 +1,24 @@
 <?php
 
-namespace App\Tests\Unit\Calculator\Operation;
+namespace App\Tests\Unit\Calculator\Arithmetic\Operation;
 
 use App\Calculator\Arithmetic\NumberOperand;
-use App\Calculator\Arithmetic\Operation\Sum;
+use App\Calculator\Arithmetic\Operation\Exception\NoOperandsGivenException;
+use App\Calculator\Arithmetic\Operation\Subtract;
+use App\Calculator\Operation\OperationInterface;
 use App\Number\Number;
 use App\Number\NumberInterface;
 use PHPUnit\Framework\TestCase;
 
-class SumTest extends TestCase
+class SubtractTest extends ArithmeticOperationTestCase
 {
     /**
-     * @dataProvider sumProvider
+     * @dataProvider subtractProvider
      * @param string $leftStr
      * @param string $rightStr
      * @param string $resultString
      * @return void
+     * @throws NoOperandsGivenException
      */
     public function testExec(string $leftStr, string $rightStr, string $resultString)
     {
@@ -23,10 +26,10 @@ class SumTest extends TestCase
         $op1 = NumberOperand::createFromString($leftStr);
         $op2 = NumberOperand::createFromString($rightStr);
 
-        $sum = new Sum();
+        $operation = new Subtract();
 
         /** @var NumberInterface $result */
-        $result = $sum($op1, $op2)->exec()->getValue();
+        $result = $operation($op1, $op2)->exec()->getValue();
 
         $expected = Number::createFromString($resultString);
         $this->assertTrue(
@@ -40,23 +43,21 @@ class SumTest extends TestCase
 
     }
 
-    public function sumProvider()
+    public function subtractProvider(): array
     {
         return [
-            '2+3=5' => [
-                '2', '3', '5'
-            ],
-            '2+(-3)=-1' => [
-                '2', '-3', '-1'
-            ],
-            '2.1+3=5.1' => [
-                '2.1', '3', '5.1'
-            ],
-            '2.1+(-3)=-1.1' => [
-                '2.1', '-3', '-0.9'
-            ]
+            '2-2=0' => ['2', '2', '0'],
+            '1-2=-1' => ['1', '2', '-1'],
+            '1.6-1=0.6' => ['1.6', '1', '0.6'],
+            '1.6001-2=-0.3999' => ['1.6001', '2', '-0.3999'],
         ];
     }
 
-
+    /**
+     * @return Subtract
+     */
+    function getOperation(): OperationInterface
+    {
+        return new Subtract();
+    }
 }

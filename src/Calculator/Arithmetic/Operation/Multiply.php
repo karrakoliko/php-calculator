@@ -9,7 +9,7 @@ use App\Calculator\Operator\OperatorInterface;
 use App\Calculator\Result\ResultInterface;
 use App\Number\Number;
 
-class Multiply extends MathOperationAbstract
+class Multiply extends ArithmeticOperationAbstract
 {
 
     const SHORTCUT_MULTIPLY_TO_ZERO_EQUALS_ZERO = 'shortcut_multiply_to_zero_equals_zero';
@@ -18,6 +18,9 @@ class Multiply extends MathOperationAbstract
 
     public function exec(): ResultInterface
     {
+
+        $this->throwIfNoOperandsGiven();
+
         if ($this->hasZeroOperand()) {
             $this->shortcutsUsed[] = self::SHORTCUT_MULTIPLY_TO_ZERO_EQUALS_ZERO;
             return new CalculationResult($this, Number::zero());

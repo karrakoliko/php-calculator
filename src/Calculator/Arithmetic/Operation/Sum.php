@@ -10,7 +10,7 @@ use App\Calculator\Operator\OperatorInterface;
 use App\Calculator\Result\ResultInterface;
 use App\Number\Number;
 
-class Sum extends MathOperationAbstract
+class Sum extends ArithmeticOperationAbstract
 {
 
     const NAME = 'sum';
@@ -23,6 +23,8 @@ class Sum extends MathOperationAbstract
 
     public function exec(): ResultInterface
     {
+        $this->throwIfNoOperandsGiven();
+
         $numbers = array_map(function (NumberOperand $operand) {
 
             return $operand->getValue()->getValue();

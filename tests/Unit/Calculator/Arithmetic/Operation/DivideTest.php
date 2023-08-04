@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Tests\Unit\Calculator\Operation;
+namespace App\Tests\Unit\Calculator\Arithmetic\Operation;
 
 use App\Calculator\Arithmetic\NumberOperand;
 use App\Calculator\Arithmetic\Operation\Divide;
 use App\Calculator\Arithmetic\Operation\Exception\DivisionByZeroException;
+use App\Calculator\Operation\OperationInterface;
 use PHPUnit\Framework\TestCase;
 
-class DivideTest extends TestCase
+class DivideTest extends ArithmeticOperationTestCase
 {
 
     public function testThrowsIfDivisionByZeroMet()
@@ -19,7 +20,7 @@ class DivideTest extends TestCase
             NumberOperand::createFromString('0')
         ];
 
-        $operation = new Divide();
+        $operation = $this->getOperation();
 
         $operation(...$operands)->exec();
     }
@@ -33,7 +34,7 @@ class DivideTest extends TestCase
             NumberOperand::createFromString('1')
         ];
 
-        $operation = new Divide();
+        $operation = $this->getOperation();
 
         $operation(...$operands)->exec();
 
@@ -46,11 +47,18 @@ class DivideTest extends TestCase
             NumberOperand::createFromString('1')
         ];
 
-        $operation = new Divide();
+        $operation = $this->getOperation();
 
         $operation(...$operands)->exec();
 
         $this->assertContains(Divide::SHORTCUT_DIVIDE_ZERO_TO_ANY_IS_ZERO, $operation->getShortcutsUsed());
     }
 
+    /**
+     * @return Divide
+     */
+    function getOperation(): OperationInterface
+    {
+        return new Divide();
+    }
 }

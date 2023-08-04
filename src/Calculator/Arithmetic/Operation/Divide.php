@@ -12,7 +12,7 @@ use App\Calculator\Operator\OperatorInterface;
 use App\Calculator\Result\ResultInterface;
 use App\Number\Number;
 
-class Divide extends MathOperationAbstract
+class Divide extends ArithmeticOperationAbstract
 {
     const SHORTCUT_DIVIDE_ZERO_TO_ANY_IS_ZERO = 'divide_zero_to_any_is_zero';
     const NAME = 'divide';
@@ -26,9 +26,7 @@ class Divide extends MathOperationAbstract
     public function exec(): ResultInterface
     {
 
-        if (!count($this->operands)) {
-            throw new NoOperandsGivenException('No operands given');
-        }
+        $this->throwIfNoOperandsGiven();
 
         if ($this->isDividingZero()) {
             $this->shortcutsUsed[] = self::SHORTCUT_DIVIDE_ZERO_TO_ANY_IS_ZERO;
