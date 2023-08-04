@@ -12,5 +12,7 @@ interface NumberInterface extends Stringable
 
     public function getValue();
 
+    public function getFormat(): NumberFormatInterface;
+
     public function equals(NumberInterface $number): bool;
 }

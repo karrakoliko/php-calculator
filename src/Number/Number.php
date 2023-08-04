@@ -13,22 +13,12 @@ class Number implements NumberInterface
 {
 
     private string $value;
+    private NumberFormatInterface $format;
 
     protected function __construct(string $value, NumberFormatInterface $format)
     {
-        if (!self::isValidNumberString($value, $format)) {
-            throw new InvalidNumberException('Invalid number');
-        }
-
         $this->value = $value;
-    }
-
-    public static function isValidNumberString(string $value, NumberFormatInterface $format): bool
-    {
-        $validator = new MaskBasedNumberFormatValidator();
-
-        /** @var MaskBasedInterface|NumberFormatInterface $format */
-        return $validator->validate($value, $format);
+        $this->format = $format;
     }
 
     public static function zero(): Number
@@ -47,6 +37,12 @@ class Number implements NumberInterface
             if ($format === null) {
                 throw new InvalidNumberException('Invalid number: given number does not match any of supported formats');
             }
+            
+        } else {
+
+            if (!self::isValidNumberString($value, $format)) {
+                throw new InvalidNumberException('Invalid number');
+            }
         }
 
         return new Number($value, $format);
@@ -64,6 +60,14 @@ class Number implements NumberInterface
             ],
             new MaskBasedNumberFormatValidator()
         );
+    }
+
+    public static function isValidNumberString(string $value, NumberFormatInterface $format): bool
+    {
+        $validator = new MaskBasedNumberFormatValidator();
+
+        /** @var MaskBasedInterface|NumberFormatInterface $format */
+        return $validator->validate($value, $format);
     }
 
     public function getScale(): int
@@ -94,4 +98,8 @@ class Number implements NumberInterface
         return $this->value;
     }
 
+    public function getFormat(): NumberFormatInterface
+    {
+        return $this->format;
+    }
 }
