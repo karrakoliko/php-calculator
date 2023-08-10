@@ -39,7 +39,7 @@ class Subtract extends ArithmeticOperationAbstract
 
         }, $initial);
 
-        return new CalculationResult($this, Number::createFromString($result));
+        return new CalculationResult($this, Number::createFromFloat($result));
     }
 
     public function getShortcutsUsed(): array

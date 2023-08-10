@@ -36,7 +36,7 @@ class Multiply extends ArithmeticOperationAbstract
             return $carry * $item;
         }, $initial);
 
-        return new CalculationResult($this, Number::createFromString($result));
+        return new CalculationResult($this, Number::createFromFloat($result));
     }
 
     /**

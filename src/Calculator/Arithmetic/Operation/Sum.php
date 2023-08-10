@@ -33,7 +33,7 @@ class Sum extends ArithmeticOperationAbstract
 
         $result = array_sum($numbers);
 
-        return new CalculationResult($this, Number::createFromString($result));
+        return new CalculationResult($this, Number::createFromFloat($result));
     }
 
     public function getShortcutsUsed(): array

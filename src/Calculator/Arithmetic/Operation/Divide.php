@@ -48,7 +48,7 @@ class Divide extends ArithmeticOperationAbstract
 
         }, $initial);
 
-        $number = Number::createFromString($result);
+        $number = Number::createFromFloat($result);
 
         return new CalculationResult($this, $number);
     }

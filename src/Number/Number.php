@@ -12,6 +12,7 @@ use App\Number\Format\NumberFormatInterface;
 class Number implements NumberInterface
 {
 
+    const SCALE = 8;
     private string $value;
     private NumberFormatInterface $format;
 
@@ -26,18 +27,45 @@ class Number implements NumberInterface
         return new Number(0, NumberFormatFactory::int());
     }
 
+    public static function createFromFloat(float $value): NumberInterface
+    {
+
+        $expPos = stripos($value, 'e');
+        $dotPos = stripos($value, '.');
+
+        if (!$dotPos) { // if no dot - treat as int
+            return self::createFromString($value, NumberFormatFactory::int());
+        }
+
+        if ($expPos) { // "unwrap" exponent
+
+            $formatted = number_format($value, self::SCALE, '.', '');
+
+            $formatted = rtrim($formatted, '0');
+
+            if (preg_match('~\.$~', $formatted)) {
+                // truncate trailing zeros and return as int
+
+                $formatted = substr($formatted, 0, strlen($formatted) - 1);
+
+                return new Number($formatted, NumberFormatFactory::int());
+            }
+
+            return new Number($formatted, NumberFormatFactory::decimal());
+
+        }
+
+        // treat as decimal
+        return self::createFromString($value, NumberFormatFactory::decimal());
+
+    }
+
     public static function createFromString(string $value, ?NumberFormatInterface $format = null): Number
     {
         if ($format === null) {
 
-            $numberFormatGuesser = self::getNumberFormatGuesser();
+            $format = self::guessFormatOrThrow($value, $format);
 
-            $format = $numberFormatGuesser->guess($value);
-
-            if ($format === null) {
-                throw new InvalidNumberException('Invalid number: given number does not match any of supported formats');
-            }
-            
         } else {
 
             if (!self::isValidNumberString($value, $format)) {
@@ -46,6 +74,23 @@ class Number implements NumberInterface
         }
 
         return new Number($value, $format);
+    }
+
+    /**
+     * @param string $value
+     * @param NumberFormatInterface|null $format
+     * @return NumberFormatInterface
+     */
+    protected static function guessFormatOrThrow(string $value, ?NumberFormatInterface $format): NumberFormatInterface
+    {
+        $numberFormatGuesser = self::getNumberFormatGuesser();
+
+        $format = $numberFormatGuesser->guess($value);
+
+        if ($format === null) {
+            throw new InvalidNumberException('Invalid number: given number does not match any of supported formats');
+        }
+        return $format;
     }
 
     /**

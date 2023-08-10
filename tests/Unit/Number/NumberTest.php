@@ -61,7 +61,25 @@ class NumberTest extends TestCase
      */
     public function testCreateFromString(string $val, string $formatName, $expectedValue)
     {
-        $this->assertEquals(Number::createFromString($val, NumberFormatFactory::createByName($formatName))->getValue(), $expectedValue);
+        $this->assertEquals($expectedValue, Number::createFromString($val, NumberFormatFactory::createByName($formatName))->getValue());
+    }
+
+    /**
+     * @dataProvider floatNumberProvider
+     * @return void
+     */
+    public function testCreateFromFloat(float $val, $expectedValue)
+    {
+        $this->assertEquals($expectedValue, Number::createFromFloat($val)->getValue());
+    }
+
+    public function floatNumberProvider()
+    {
+        return [
+            '1.0E-8' => [1.0E-8, '0.00000001'],
+            '1.0E-9' => [1.0E-9, '0'],
+            '1.0E+35' => [1.0E+35, '99999999999999996863366107917975552'], // floating point math as is
+        ];
     }
 
     /**
