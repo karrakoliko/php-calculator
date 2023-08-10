@@ -64,7 +64,7 @@ class Number implements NumberInterface
     {
         if ($format === null) {
 
-            $format = self::guessFormatOrThrow($value, $format);
+            $format = self::guessFormatOrThrow($value);
 
         } else {
 
@@ -78,10 +78,9 @@ class Number implements NumberInterface
 
     /**
      * @param string $value
-     * @param NumberFormatInterface|null $format
      * @return NumberFormatInterface
      */
-    protected static function guessFormatOrThrow(string $value, ?NumberFormatInterface $format): NumberFormatInterface
+    protected static function guessFormatOrThrow(string $value): NumberFormatInterface
     {
         $numberFormatGuesser = self::getNumberFormatGuesser();
 
