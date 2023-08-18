@@ -3,11 +3,12 @@
 namespace App\Number;
 
 use App\Number\Exception\InvalidNumberException;
-use App\Number\Format\Guesser\RegisteredNumberFormatGuesser;
+use App\Number\Format\Detector\RegisteredNumberFormatDetector;
 use App\Number\Format\MaskBased\MaskBasedInterface;
 use App\Number\Format\MaskBased\Validator\MaskBasedNumberFormatValidator;
 use App\Number\Format\NumberFormatFactory;
 use App\Number\Format\NumberFormatInterface;
+use App\Number\Format\Validator\Exception\FormatNotSupportedException;
 
 class Number implements NumberInterface
 {
@@ -27,6 +28,9 @@ class Number implements NumberInterface
         return new Number(0, NumberFormatFactory::int());
     }
 
+    /**
+     * @throws FormatNotSupportedException
+     */
     public static function createFromFloat(float $value): NumberInterface
     {
 
@@ -60,6 +64,9 @@ class Number implements NumberInterface
 
     }
 
+    /**
+     * @throws FormatNotSupportedException
+     */
     public static function createFromString(string $value, ?NumberFormatInterface $format = null): Number
     {
         if ($format === null) {
@@ -79,12 +86,13 @@ class Number implements NumberInterface
     /**
      * @param string $value
      * @return NumberFormatInterface
+     * @throws FormatNotSupportedException
      */
     protected static function guessFormatOrThrow(string $value): NumberFormatInterface
     {
         $numberFormatGuesser = self::getNumberFormatGuesser();
 
-        $format = $numberFormatGuesser->guess($value);
+        $format = $numberFormatGuesser->detect($value);
 
         if ($format === null) {
             throw new InvalidNumberException('Invalid number: given number does not match any of supported formats');
@@ -93,11 +101,11 @@ class Number implements NumberInterface
     }
 
     /**
-     * @return RegisteredNumberFormatGuesser
+     * @return RegisteredNumberFormatDetector
      */
-    protected static function getNumberFormatGuesser(): RegisteredNumberFormatGuesser
+    protected static function getNumberFormatGuesser(): RegisteredNumberFormatDetector
     {
-        return new RegisteredNumberFormatGuesser(
+        return new RegisteredNumberFormatDetector(
             [
                 NumberFormatFactory::int(),
                 NumberFormatFactory::decimal(),
@@ -106,6 +114,9 @@ class Number implements NumberInterface
         );
     }
 
+    /**
+     * @throws FormatNotSupportedException
+     */
     public static function isValidNumberString(string $value, NumberFormatInterface $format): bool
     {
         $validator = new MaskBasedNumberFormatValidator();

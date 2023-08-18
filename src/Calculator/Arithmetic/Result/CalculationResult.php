@@ -33,11 +33,10 @@ class CalculationResult implements ResultInterface
 
     public function toExpression(): ExpressionInterface
     {
-        $expr = new EqualityExpression(
+        /** @noinspection PhpParamsInspection */
+        return new EqualityExpression(
             $this->operation->toExpression(),
             ArithmeticExpression::fromNumber($this->resultNumber)
         );
-
-        return $expr;
     }
 }

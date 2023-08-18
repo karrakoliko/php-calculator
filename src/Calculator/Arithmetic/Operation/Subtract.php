@@ -3,11 +3,13 @@
 namespace App\Calculator\Arithmetic\Operation;
 
 use App\Calculator\Arithmetic\NumberOperand;
+use App\Calculator\Arithmetic\Operation\Exception\NoOperandsGivenException;
 use App\Calculator\Arithmetic\Operator\Minus;
 use App\Calculator\Arithmetic\Result\CalculationResult;
 use App\Calculator\Operand\OperandInterface;
 use App\Calculator\Operator\OperatorInterface;
 use App\Calculator\Result\ResultInterface;
+use App\Number\Format\Validator\Exception\FormatNotSupportedException;
 use App\Number\Number;
 
 class Subtract extends ArithmeticOperationAbstract
@@ -15,12 +17,16 @@ class Subtract extends ArithmeticOperationAbstract
 
     const NAME = 'subtract';
 
-    public function __invoke(OperandInterface ...$operands)
+    public function __invoke(OperandInterface ...$operands): static
     {
         $this->operands = $operands;
         return $this;
     }
 
+    /**
+     * @throws NoOperandsGivenException
+     * @throws FormatNotSupportedException
+     */
     public function exec(): ResultInterface
     {
         $this->throwIfNoOperandsGiven();

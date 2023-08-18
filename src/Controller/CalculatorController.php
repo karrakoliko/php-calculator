@@ -7,9 +7,9 @@ use App\Calculator\Arithmetic\Operation\Exception\DivisionByZeroException;
 use App\Calculator\Arithmetic\Operator\ArithmeticOperatorFactory;
 use App\Calculator\CalculatorInterface;
 use App\Calculator\Exception\InvalidOperandTypeException;
-use App\Calculator\Operation\OperationInterface;
 use App\Calculator\Result\ResultInterface;
 use App\Number\Exception\InvalidNumberException;
+use App\Number\Format\Validator\Exception\FormatNotSupportedException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,7 +35,7 @@ class CalculatorController extends AbstractController
         try {
             return $this->calc($request);
 
-        } catch (TypeError $e) {
+        } catch (TypeError) {
             return $this->showOperationForm();
         }
 
@@ -51,9 +51,9 @@ class CalculatorController extends AbstractController
     public
     function calc(Request $request): Response
     {
-        $leftStr = $request->get('left','');
-        $operatorStr = $request->get('operator','');
-        $rightStr = $request->get('right','');
+        $leftStr = $request->get('left', '');
+        $operatorStr = $request->get('operator', '');
+        $rightStr = $request->get('right', '');
 
         if ($leftStr === '' || $operatorStr === '' || $rightStr === '') {
             return $this->showOperationForm();
@@ -69,15 +69,15 @@ class CalculatorController extends AbstractController
 
             return $this->showResult($result);
 
-        } catch (TypeError|InvalidNumberException|InvalidOperandTypeException $e) {
+        } catch (TypeError|InvalidNumberException|InvalidOperandTypeException|FormatNotSupportedException) {
             return $this->showError('Вы ввели некорректное число');
-        } catch (DivisionByZeroException $e) {
+        } catch (DivisionByZeroException) {
             return $this->showError('Деление на 0');
         }
 
     }
 
-    public function showResult(ResultInterface $result)
+    public function showResult(ResultInterface $result): Response
     {
         return $this->render('calculator/calculator.html.twig',
             [

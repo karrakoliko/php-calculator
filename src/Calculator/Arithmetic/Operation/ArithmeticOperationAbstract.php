@@ -4,7 +4,6 @@ namespace App\Calculator\Arithmetic\Operation;
 
 use App\Calculator\Arithmetic\Expression\ArithmeticExpression;
 use App\Calculator\Arithmetic\NumberOperand;
-use App\Calculator\Arithmetic\Operation\Exception\NoOperandsGivenException;
 use App\Calculator\Arithmetic\Operator\ArithmeticOperatorAbstract;
 use App\Calculator\Expression\Exception\UnableToBuildExpression;
 use App\Calculator\Expression\ExpressionInterface;
@@ -15,6 +14,7 @@ abstract class ArithmeticOperationAbstract implements OperationInterface
 {
 
     use ThrowIfNoOperandsGivenTrait;
+
     /**
      * @var NumberOperand[]
      */

@@ -15,6 +15,7 @@ trait ThrowIfNoOperandsGivenTrait
      */
     protected function throwIfNoOperandsGiven(): void
     {
+        /** @noinspection PhpConditionAlreadyCheckedInspection */
         if (!is_array($this->operands) || !count($this->operands)) {
             throw new NoOperandsGivenException('No operands given');
         }

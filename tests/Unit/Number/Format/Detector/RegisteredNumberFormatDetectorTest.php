@@ -1,20 +1,22 @@
 <?php
 
-namespace App\Tests\Unit\Number\Format\Guesser;
+namespace App\Tests\Unit\Number\Format\Detector;
 
-use App\Number\Format\Guesser\RegisteredNumberFormatGuesser;
+use App\Number\Format\Detector\RegisteredNumberFormatDetector;
 use App\Number\Format\MaskBased\Validator\MaskBasedNumberFormatValidator;
 use App\Number\Format\NumberFormatFactory;
 use App\Number\Format\NumberFormatInterface;
+use App\Number\Format\Validator\Exception\FormatNotSupportedException;
 use PHPUnit\Framework\TestCase;
 
-class RegisteredNumberFormatsGuesserTest extends TestCase
+class RegisteredNumberFormatDetectorTest extends TestCase
 {
     /**
      * @dataProvider guessProvider
      * @return void
+     * @throws FormatNotSupportedException
      */
-    public function testGuess($numberString, ?NumberFormatInterface $expected)
+    public function testDetect($numberString, ?NumberFormatInterface $expected)
     {
         $formats = [
             NumberFormatFactory::int(),
@@ -23,9 +25,9 @@ class RegisteredNumberFormatsGuesserTest extends TestCase
 
         $validator = new MaskBasedNumberFormatValidator();
 
-        $guesser = new RegisteredNumberFormatGuesser($formats, $validator);
+        $guesser = new RegisteredNumberFormatDetector($formats, $validator);
 
-        $actual = $guesser->guess($numberString);
+        $actual = $guesser->detect($numberString);
 
         if ($actual !== null) {
             $this->assertEquals($expected->getName(), $actual->getName());
@@ -35,7 +37,7 @@ class RegisteredNumberFormatsGuesserTest extends TestCase
 
     }
 
-    public function guessProvider()
+    public function guessProvider(): array
     {
         return [
             [0, NumberFormatFactory::int()],

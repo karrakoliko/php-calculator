@@ -3,10 +3,12 @@
 namespace App\Calculator\Arithmetic\Operation;
 
 use App\Calculator\Arithmetic\NumberOperand;
+use App\Calculator\Arithmetic\Operation\Exception\NoOperandsGivenException;
 use App\Calculator\Arithmetic\Result\CalculationResult;
 use App\Calculator\Operand\OperandInterface;
 use App\Calculator\Operator\OperatorInterface;
 use App\Calculator\Result\ResultInterface;
+use App\Number\Format\Validator\Exception\FormatNotSupportedException;
 use App\Number\Number;
 
 class Multiply extends ArithmeticOperationAbstract
@@ -16,6 +18,10 @@ class Multiply extends ArithmeticOperationAbstract
     const NAME = 'multiply';
     private array $shortcutsUsed = [];
 
+    /**
+     * @throws NoOperandsGivenException
+     * @throws FormatNotSupportedException
+     */
     public function exec(): ResultInterface
     {
 
@@ -62,7 +68,7 @@ class Multiply extends ArithmeticOperationAbstract
         return $this->shortcutsUsed;
     }
 
-    public function __invoke(OperandInterface ...$operands)
+    public function __invoke(OperandInterface ...$operands): static
     {
         $this->operands = $operands;
         return $this;

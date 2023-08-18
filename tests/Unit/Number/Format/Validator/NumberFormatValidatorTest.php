@@ -21,8 +21,6 @@ class NumberFormatValidatorTest extends TestCase
 
         $validator = new MaskBasedNumberFormatValidator();
 
-        $errors = new NotificationBag();
-
         $format = NumberFormatFactory::createByName($formatName);
 
         $resultBool = $validator->validate($number, $format);

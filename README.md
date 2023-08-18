@@ -5,7 +5,7 @@ PHP калькулятор
 ## Запуск
 
 ### Через docker:
-1. ```sudo docker build -t karrakoliko/php-calculator . && sudo docker run -p NEEDED_PORT:8000 -d -it karrakoliko/php-calculator```
+1. ```sudo docker build -t karrakoliko/php-calculator . && sudo docker run -p NEEDED_PORT:8000 -it karrakoliko/php-calculator```
 2. Открыть в браузере ```http://localhost:NEEDED_PORT```
 
 #### Остановить контейнер:

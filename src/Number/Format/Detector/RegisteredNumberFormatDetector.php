@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Number\Format\Guesser;
+namespace App\Number\Format\Detector;
 
 use App\Number\Format\NumberFormatInterface;
+use App\Number\Format\Validator\Exception\FormatNotSupportedException;
 use App\Number\Format\Validator\NumberFormatValidatorInterface;
 use LogicException;
 
-class RegisteredNumberFormatGuesser implements NumberFormatGuesserInterface
+class RegisteredNumberFormatDetector implements NumberFormatDetectorInterface
 {
 
     private array $formats;
@@ -22,7 +23,10 @@ class RegisteredNumberFormatGuesser implements NumberFormatGuesserInterface
         $this->validator = $validator;
     }
 
-    public function guess($number): ?NumberFormatInterface
+    /**
+     * @throws FormatNotSupportedException
+     */
+    public function detect($number): ?NumberFormatInterface
     {
         if (!count($this->formats)) {
             throw new LogicException('No number format registered');

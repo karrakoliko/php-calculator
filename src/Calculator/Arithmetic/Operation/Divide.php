@@ -10,6 +10,7 @@ use App\Calculator\Arithmetic\Result\CalculationResult;
 use App\Calculator\Operand\OperandInterface;
 use App\Calculator\Operator\OperatorInterface;
 use App\Calculator\Result\ResultInterface;
+use App\Number\Format\Validator\Exception\FormatNotSupportedException;
 use App\Number\Number;
 
 class Divide extends ArithmeticOperationAbstract
@@ -22,6 +23,7 @@ class Divide extends ArithmeticOperationAbstract
     /**
      * @return ResultInterface
      * @throws NoOperandsGivenException
+     * @throws FormatNotSupportedException
      */
     public function exec(): ResultInterface
     {
@@ -66,7 +68,7 @@ class Divide extends ArithmeticOperationAbstract
         return $this->shortcutsUsed;
     }
 
-    public function __invoke(OperandInterface ...$operands)
+    public function __invoke(OperandInterface ...$operands): static
     {
         if ($this->isDivisionByZeroMet(...$operands)) {
             throw new DivisionByZeroException('Division by zero');

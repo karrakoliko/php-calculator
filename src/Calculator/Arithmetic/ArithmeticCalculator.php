@@ -37,6 +37,10 @@ class ArithmeticCalculator implements CalculatorInterface
     public function calculate(OperandInterface $left, OperatorInterface $operator, OperandInterface $right): ResultInterface
     {
 
+        /**
+         * @noinspection PhpConditionAlreadyCheckedInspection
+         * We violate LSP consciously, as ArithmeticCalculator expects ONLY NumberOperand instances.
+         */
         if (!$left instanceof NumberOperand || !$right instanceof NumberOperand) {
             throw new InvalidOperandTypeException('Number calculator demands NumberOperand\'s');
         }
